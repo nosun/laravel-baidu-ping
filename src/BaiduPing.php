@@ -22,7 +22,7 @@ class BaiduPing
      * @param null $type
      * @return
      */
-    public function push($url, $type = BaiduPingModel::TYPE_SITE)
+    public static function push($url, $type = BaiduPingModel::TYPE_SITE)
     {
         return BaiduPingModel::firstOrCreate(['url' => $url, 'type' => $type]);
     }
