@@ -1,0 +1,34 @@
+{
+  "name": "larva/laravel-baidu-ping",
+  "description": "This is a baidu ping.",
+  "keywords": [ "laravel", "baidu", "larva" ],
+  "type": "library",
+  "license": "MIT",
+  "require": {
+    "ext-bcmath": "*",
+    "ext-json": "*",
+    "illuminate/bus": "^5.7",
+    "illuminate/events": "^5.7",
+    "illuminate/http": "^5.7",
+    "illuminate/queue": "^5.7",
+    "illuminate/database": "^5.7",
+    "illuminate/support": "^5.7",
+    "larva/site-tool": "^1.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Larva\\Baidu\\Ping\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.0-dev"
+    },
+    "laravel": {
+      "providers": [
+        "Larva\\Baidu\\Ping\\BaiduPingServiceProvider"
+      ]
+    }
+  },
+  "prefer-stable": true
+}
