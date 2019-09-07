@@ -19,6 +19,7 @@ use Larva\Baidu\Ping\Jobs\BaiduPingJob;
  * @property string $msg
  * @property int $failures
  * @property string $push_at
+ * @method static \Illuminate\Database\Eloquent\Builder|BaiduPing failure()
  *
  * @author Tongle Xu <xutongle@gmail.com>
  */
@@ -29,7 +30,7 @@ class BaiduPing extends Model
     const TYPE_SITE = 'site';//站长平台
     const TYPE_MIP = 'mip';//站长平台 MIP
     const TYPE_REALTIME = 'realtime';//移动 天级收录
-    const TYPE_BATCH = 'batch';//移动周级收录
+    const TYPE_BATCH = 'batch';//移动 周级收录
 
     const STATUS_PENDING = 0b0;//待推送
     const STATUS_SUCCESS = 0b1;//正常

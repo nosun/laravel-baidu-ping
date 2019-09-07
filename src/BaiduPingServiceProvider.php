@@ -23,8 +23,9 @@ class BaiduPingServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //$this->loadViewsFrom(__DIR__.'/../resources/views', 'passport');
         if ($this->app->runningInConsole()) {
+            $this->commands('command.baidu.ping');
+            $this->commands('command.baidu.ping.retry');
             $this->publishes([
                 __DIR__.'/../database/migrations' => database_path('migrations'),
             ], 'baidu-ping');
@@ -43,7 +44,22 @@ class BaiduPingServiceProvider extends ServiceProvider
      */
     public function register()
     {
+        $this->registerCommand();
+    }
 
+    /**
+     * Register the MNS queue command.
+     * @return void
+     */
+    private function registerCommand()
+    {
+        $this->app->singleton('command.baidu.ping', function () {
+            return new \Larva\Baidu\Ping\Commands\BaiduPing();
+        });
+
+        $this->app->singleton('command.baidu.ping.retry', function () {
+            return new \Larva\Baidu\Ping\Commands\BaiduPingRetry();
+        });
     }
 
 }
