@@ -50,7 +50,7 @@ class BaiduPing extends Model
      * @var array
      */
     protected $fillable = [
-        'url', 'type', 'status', 'msg', 'failures', 'push_at'
+        'url', 'type', 'status', 'msg', 'failures', 'push_at','included'
     ];
 
     /**
