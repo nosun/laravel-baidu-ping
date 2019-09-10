@@ -46,9 +46,9 @@ class BaiduPing extends Command
      */
     public function handle()
     {
-        $count = \Larva\Baidu\Ping\Models\BaiduPing::count();
+        $count = \Larva\Baidu\Ping\Models\BaiduPing::pending()->count();
         $bar = $this->output->createProgressBar($count);
-        \Larva\Baidu\Ping\Models\BaiduPing::orderBy('push_at', 'asc')->chunk(100, function ($results) use ($bar) {
+        \Larva\Baidu\Ping\Models\BaiduPing::pending()->orderBy('push_at', 'asc')->chunk(100, function ($results) use ($bar) {
             /** @var \Larva\Baidu\Ping\Models\BaiduPing $ping */
             foreach ($results as $ping) {
                 BaiduPingJob::dispatch($ping);

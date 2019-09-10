@@ -20,6 +20,7 @@ use Larva\Baidu\Ping\Jobs\BaiduPingJob;
  * @property int $failures
  * @property string $push_at
  * @method static \Illuminate\Database\Eloquent\Builder|BaiduPing failure()
+ * @method static \Illuminate\Database\Eloquent\Builder|BaiduPing pending()
  *
  * @author Tongle Xu <xutongle@gmail.com>
  */
@@ -67,6 +68,17 @@ class BaiduPing extends Model
         static::created(function ($model) {
             BaiduPingJob::dispatch($model);
         });
+    }
+
+    /**
+     * 查询等待的推送
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    public function scopePending($query)
+    {
+        return $query->where('status', static::STATUS_PENDING);
     }
 
     /**
