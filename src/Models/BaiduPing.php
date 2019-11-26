@@ -19,6 +19,8 @@ use Larva\Baidu\Ping\Jobs\BaiduPingJob;
  * @property string $msg
  * @property int $failures
  * @property string $push_at
+ *
+ * @property-read boolean $failure
  * @method static \Illuminate\Database\Eloquent\Builder|BaiduPing failure()
  * @method static \Illuminate\Database\Eloquent\Builder|BaiduPing pending()
  *
@@ -90,6 +92,15 @@ class BaiduPing extends Model
     public function scopeFailure($query)
     {
         return $query->where('status', static::STATUS_FAILURE);
+    }
+
+    /**
+     * 是否已失败
+     * @return boolean
+     */
+    public function getFailureAttribute()
+    {
+        return $this->status == static::STATUS_FAILURE;
     }
 
     /**
