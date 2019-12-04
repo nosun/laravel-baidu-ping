@@ -26,4 +26,34 @@ class BaiduPing
     {
         return BaiduPingModel::firstOrCreate(['url' => $url, 'type' => $type]);
     }
+
+    /**
+     * 天级收录
+     * @param string $url
+     * @return
+     */
+    public static function pushRealtime($url)
+    {
+        return static::push($url, BaiduPingModel::TYPE_REALTIME);
+    }
+
+    /**
+     * 周级收录
+     * @param string $url
+     * @return
+     */
+    public static function pushBatch($url)
+    {
+        return static::push($url, BaiduPingModel::TYPE_BATCH);
+    }
+
+    /**
+     * 推MIP
+     * @param string $url
+     * @return mixed
+     */
+    public static function pushMip($url)
+    {
+        return static::push($url, BaiduPingModel::TYPE_MIP);
+    }
 }
