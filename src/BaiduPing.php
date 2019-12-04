@@ -34,7 +34,10 @@ class BaiduPing
      */
     public static function pushRealtime($url)
     {
-        return static::push($url, BaiduPingModel::TYPE_REALTIME);
+        if (config('baidu-ping.app_id')) {
+            return static::push($url, BaiduPingModel::TYPE_REALTIME);
+        }
+        return static::push($url);
     }
 
     /**
@@ -44,7 +47,10 @@ class BaiduPing
      */
     public static function pushBatch($url)
     {
-        return static::push($url, BaiduPingModel::TYPE_BATCH);
+        if (config('baidu-ping.app_id')) {
+            return static::push($url, BaiduPingModel::TYPE_BATCH);
+        }
+        return static::push($url);
     }
 
     /**
