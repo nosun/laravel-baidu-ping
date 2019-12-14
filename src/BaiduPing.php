@@ -10,7 +10,7 @@ namespace Larva\Baidu\Ping;
 use Larva\Baidu\Ping\Models\BaiduPing as BaiduPingModel;
 
 /**
- * Class BaiduPing
+ * 百度推送快捷方法
  *
  * @author Tongle Xu <xutongle@gmail.com>
  */
@@ -34,7 +34,7 @@ class BaiduPing
      */
     public static function pushRealtime($url)
     {
-        if (config('baidu-ping.app_id')) {
+        if (config('services.baidu.app_id')) {
             return static::push($url, BaiduPingModel::TYPE_REALTIME);
         }
         return static::push($url);
@@ -47,7 +47,7 @@ class BaiduPing
      */
     public static function pushBatch($url)
     {
-        if (config('baidu-ping.app_id')) {
+        if (config('services.baidu.app_id')) {
             return static::push($url, BaiduPingModel::TYPE_BATCH);
         }
         return static::push($url);

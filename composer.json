@@ -5,7 +5,6 @@
   "type": "library",
   "license": "MIT",
   "require": {
-    "ext-bcmath": "*",
     "ext-json": "*",
     "illuminate/bus": "^5.7 || ^6.0",
     "illuminate/events": "^5.7 || ^6.0",

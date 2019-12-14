@@ -7,7 +7,6 @@
 
 namespace Larva\Baidu\Ping\Commands;
 
-use App\Jobs\SearchPushJob;
 use Illuminate\Console\Command;
 use Larva\Baidu\Ping\Jobs\BaiduPingJob;
 use Larva\Baidu\Ping\Models\BaiduPing;

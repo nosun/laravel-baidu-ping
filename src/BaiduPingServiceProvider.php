@@ -29,11 +29,6 @@ class BaiduPingServiceProvider extends ServiceProvider
             $this->publishes([
                 __DIR__.'/../database/migrations' => database_path('migrations'),
             ], 'baidu-ping');
-
-            $this->publishes([
-                dirname(__DIR__) . '/config/baidu-ping.php' => config_path('baidu-ping.php'),],
-                'baidu-ping'
-            );
         }
     }
 

@@ -57,7 +57,7 @@ class BaiduPingJob implements ShouldQueue
         try {
             if ($this->baiduPing->type == BaiduPing::TYPE_SITE) {
                 /** @var HttpResponse $response */
-                $response = Baidu::Push(config('baidu-ping.site'), config('baidu-ping.site_token'), $this->baiduPing->url);
+                $response = Baidu::Push(config('services.baidu.site'), config('services.baidu.site_token'), $this->baiduPing->url);
                 if (isset($response['error'])) {
                     $this->baiduPing->setFailure($response['message']);
                 } else {
@@ -65,7 +65,7 @@ class BaiduPingJob implements ShouldQueue
                 }
             } else if ($this->baiduPing->type == BaiduPing::TYPE_MIP) {
                 /** @var HttpResponse $response */
-                $response = Baidu::MIPPush(config('baidu-ping.site'), config('baidu-ping.site_token'), $this->baiduPing->url);
+                $response = Baidu::MIPPush(config('services.baidu.site'), config('services.baidu.site_token'), $this->baiduPing->url);
                 if (isset($response['error'])) {
                     $this->baiduPing->setFailure($response['message']);
                 } else {
@@ -73,7 +73,7 @@ class BaiduPingJob implements ShouldQueue
                 }
             } else if ($this->baiduPing->type == BaiduPing::TYPE_BATCH) {
                 /** @var HttpResponse $response */
-                $response = Baidu::WeekInclusion(config('baidu-ping.app_id'), config('baidu-ping.token'), $this->baiduPing->url);
+                $response = Baidu::WeekInclusion(config('services.baidu.app_id'), config('services.baidu.token'), $this->baiduPing->url);
                 if (isset($response['error'])) {
                     $this->baiduPing->setFailure($response['message']);
                 } else {
@@ -81,7 +81,7 @@ class BaiduPingJob implements ShouldQueue
                 }
             } else if ($this->baiduPing->type == BaiduPing::TYPE_REALTIME) {
                 /** @var HttpResponse $response */
-                $response = Baidu::DayInclusion(config('baidu-ping.app_id'), config('baidu-ping.token'), $this->baiduPing->url);
+                $response = Baidu::DayInclusion(config('services.baidu.app_id'), config('services.baidu.token'), $this->baiduPing->url);
                 if (isset($response['error'])) {
                     $this->baiduPing->setFailure($response['message']);
                 } else {

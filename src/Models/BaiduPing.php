@@ -11,14 +11,14 @@ use Illuminate\Database\Eloquent\Model;
 use Larva\Baidu\Ping\Jobs\BaiduPingJob;
 
 /**
- * Class SearchPush
+ * 百度Ping
  * @property int $id
  * @property string $type
  * @property string $url
  * @property int $status
  * @property string $msg
  * @property int $failures
- * @property string $push_at
+ * @property \Illuminate\Support\Carbon|null $push_at
  *
  * @property-read boolean $failure
  * @method static \Illuminate\Database\Eloquent\Builder|BaiduPing failure()
@@ -52,7 +52,16 @@ class BaiduPing extends Model
      * @var array
      */
     protected $fillable = [
-        'url', 'type', 'status', 'msg', 'failures', 'push_at','included'
+        'url', 'type', 'status', 'msg', 'failures', 'push_at', 'included'
+    ];
+
+    /**
+     * 模型的默认属性值。
+     *
+     * @var array
+     */
+    protected $attributes = [
+        'status' => 0b0
     ];
 
     /**
@@ -63,10 +72,6 @@ class BaiduPing extends Model
     public static function boot()
     {
         parent::boot();
-        static::creating(function ($model) {
-            /** @var BaiduPing $model */
-            $model->status = static::STATUS_PENDING;
-        });
         static::created(function ($model) {
             BaiduPingJob::dispatch($model);
         });
@@ -80,7 +85,7 @@ class BaiduPing extends Model
      */
     public function scopePending($query)
     {
-        return $query->where('status', static::STATUS_PENDING);
+        return $query->where('status', '=', static::STATUS_PENDING);
     }
 
     /**
@@ -91,7 +96,7 @@ class BaiduPing extends Model
      */
     public function scopeFailure($query)
     {
-        return $query->where('status', static::STATUS_FAILURE);
+        return $query->where('status', '=', static::STATUS_FAILURE);
     }
 
     /**
@@ -110,7 +115,7 @@ class BaiduPing extends Model
      */
     public function setFailure($msg)
     {
-        return $this->update(['status' => static::STATUS_FAILURE, 'msg' => $msg, 'failures' => $this->failures + 1, 'push_at' => $this->fromDateTime($this->freshTimestamp())]);
+        return $this->update(['status' => static::STATUS_FAILURE, 'msg' => $msg, 'failures' => $this->failures + 1, 'push_at' => $this->freshTimestamp()]);
     }
 
     /**
@@ -119,6 +124,6 @@ class BaiduPing extends Model
      */
     public function setSuccess()
     {
-        return $this->update(['status' => static::STATUS_SUCCESS, 'msg' => 'ok', 'failures' => 0, 'push_at' => $this->fromDateTime($this->freshTimestamp())]);
+        return $this->update(['status' => static::STATUS_SUCCESS, 'msg' => 'ok', 'failures' => 0, 'push_at' => $this->freshTimestamp()]);
     }
 }
