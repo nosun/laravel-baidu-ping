@@ -26,6 +26,7 @@ class BaiduPingServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             $this->commands('command.baidu.ping');
             $this->commands('command.baidu.ping.retry');
+            $this->commands('command.baidu.ping.renew');
             $this->publishes([
                 __DIR__.'/../database/migrations' => database_path('migrations'),
             ], 'baidu-ping');
@@ -56,6 +57,10 @@ class BaiduPingServiceProvider extends ServiceProvider
 
         $this->app->singleton('command.baidu.ping.retry', function () {
             return new \Larva\Baidu\Ping\Commands\BaiduPingRetry();
+        });
+
+        $this->app->singleton('command.baidu.ping.renew', function () {
+            return new \Larva\Baidu\Ping\Commands\BiaduPingRenew();
         });
     }
 
