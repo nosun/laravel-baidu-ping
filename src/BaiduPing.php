@@ -7,7 +7,6 @@
 
 namespace Larva\Baidu\Ping;
 
-use Larva\Baidu\Ping\Jobs\DeleteJob;
 use Larva\Baidu\Ping\Jobs\UpdateJob;
 use Larva\Baidu\Ping\Models\BaiduPing as BaiduPingModel;
 
