@@ -9,6 +9,7 @@ namespace Larva\Baidu\Ping\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Larva\Baidu\Ping\Jobs\BaiduPingJob;
+use Larva\Baidu\Ping\Jobs\DeleteJob;
 
 /**
  * 百度Ping
@@ -63,19 +64,6 @@ class BaiduPing extends Model
     protected $attributes = [
         'status' => 0b0
     ];
-
-    /**
-     * The "booting" method of the model.
-     *
-     * @return void
-     */
-    public static function boot()
-    {
-        parent::boot();
-        static::created(function ($model) {
-            BaiduPingJob::dispatch($model);
-        });
-    }
 
     /**
      * 查询等待的推送

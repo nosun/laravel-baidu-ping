@@ -30,6 +30,8 @@ class BaiduPingServiceProvider extends ServiceProvider
                 __DIR__.'/../database/migrations' => database_path('migrations'),
             ], 'baidu-ping');
         }
+
+        \Larva\Baidu\Ping\Models\BaiduPing::observe(\Larva\Baidu\Ping\Observers\BaiduPingObserver::class);
     }
 
     /**

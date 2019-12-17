@@ -7,6 +7,8 @@
 
 namespace Larva\Baidu\Ping;
 
+use Larva\Baidu\Ping\Jobs\DeleteJob;
+use Larva\Baidu\Ping\Jobs\UpdateJob;
 use Larva\Baidu\Ping\Models\BaiduPing as BaiduPingModel;
 
 /**
@@ -25,6 +27,32 @@ class BaiduPing
     public static function push($url, $type = BaiduPingModel::TYPE_SITE)
     {
         return BaiduPingModel::firstOrCreate(['url' => $url, 'type' => $type]);
+    }
+
+    /**
+     * 推送 Url 给百度
+     * @param string $url
+     */
+    public static function update($url)
+    {
+        if (($ping = BaiduPingModel::query()->where('url', '=', $url)->first()) != null) {
+            $ping->update(['status' => BaiduPingModel::STATUS_PENDING]);
+            UpdateJob::dispatch($ping);
+        } else {
+            static::push($url);
+        }
+    }
+
+    /**
+     * 推送 Url 给百度
+     * @param string $url
+     * @throws \Exception
+     */
+    public static function delete($url)
+    {
+        if (($ping = BaiduPingModel::query()->where('url', '=', $url)->first()) != null) {
+            $ping->delete();
+        }
     }
 
     /**
