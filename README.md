@@ -1,6 +1,10 @@
 # laravel-baidu-ping
 百度自动推送
 
+[![Packagist](https://img.shields.io/packagist/l/larva/laravel-baidu-ping.svg?maxAge=2592000)](https://packagist.org/packages/larva/laravel-baidu-ping)
+[![Total Downloads](https://img.shields.io/packagist/dt/larva/laravel-baidu-ping.svg?style=flat-square)](https://packagist.org/packages/larva/laravel-baidu-ping)
+
+
 ## Installation
 
 ```bash
