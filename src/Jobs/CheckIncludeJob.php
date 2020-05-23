@@ -13,10 +13,8 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-use Illuminate\Support\Facades\Log;
 use Larva\Baidu\Ping\Models\BaiduPing;
 use Larva\Site\Tool\Baidu;
-use Larva\Supports\HttpResponse;
 
 /**
  * 检查百度是否收录
