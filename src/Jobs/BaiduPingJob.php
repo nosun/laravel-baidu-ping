@@ -38,6 +38,16 @@ class BaiduPingJob implements ShouldQueue
     protected $baiduPing;
 
     /**
+     * @var string
+     */
+    protected $site;
+
+    /**
+     * @var string
+     */
+    protected $token;
+
+    /**
      * Create a new job instance.
      *
      * @param BaiduPing $baiduPing
@@ -45,6 +55,8 @@ class BaiduPingJob implements ShouldQueue
     public function __construct(BaiduPing $baiduPing)
     {
         $this->baiduPing = $baiduPing;
+        $this->site = config('services.baidu.site');
+        $this->token = config('services.baidu.site_token');
     }
 
     /**
@@ -57,15 +69,14 @@ class BaiduPingJob implements ShouldQueue
         try {
             if ($this->baiduPing->type == BaiduPing::TYPE_SITE) {
                 /** @var HttpResponse $response */
-                $response = Baidu::Push(config('services.baidu.site'), config('services.baidu.site_token'), $this->baiduPing->url);
+                $response = Baidu::Push($this->site, $this->token, $this->baiduPing->url);
                 if (isset($response['error'])) {
                     $this->baiduPing->setFailure($response['message']);
                 } else {
                     $this->baiduPing->setSuccess();
                 }
             } else if ($this->baiduPing->type == BaiduPing::TYPE_DAILY) {
-                /** @var HttpResponse $response */
-                $response = Baidu::DailyPush(config('services.baidu.site'), config('services.baidu.token'), $this->baiduPing->url);
+                $response = Baidu::DailyPush($this->site, $this->token, $this->baiduPing->url);
                 if (isset($response['error'])) {
                     $this->baiduPing->setFailure($response['message']);
                 } else {

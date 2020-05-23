@@ -19,11 +19,10 @@ use Larva\Site\Tool\Baidu;
 use Larva\Supports\HttpResponse;
 
 /**
- * 删除推送
- *
+ * 检查百度是否收录
  * @author Tongle Xu <xutongle@gmail.com>
  */
-class DeleteJob implements ShouldQueue
+class CheckIncludeJob implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
@@ -40,16 +39,6 @@ class DeleteJob implements ShouldQueue
     protected $baiduPing;
 
     /**
-     * @var string
-     */
-    protected $site;
-
-    /**
-     * @var string
-     */
-    protected $token;
-
-    /**
      * Create a new job instance.
      *
      * @param BaiduPing $baiduPing
@@ -57,8 +46,6 @@ class DeleteJob implements ShouldQueue
     public function __construct(BaiduPing $baiduPing)
     {
         $this->baiduPing = $baiduPing;
-        $this->site = config('services.baidu.site');
-        $this->token = config('services.baidu.site_token');
     }
 
     /**
@@ -68,11 +55,11 @@ class DeleteJob implements ShouldQueue
      */
     public function handle()
     {
-        try {
-            /** @var HttpResponse $response */
-            Baidu::Delete($this->site, $this->token, $this->baiduPing->url);
-        } catch (\Exception $e) {
-            Log::error($e->getMessage());
+        $included = Baidu::checkInclude($this->baiduPing->url);
+        if ($included) {
+            $this->baiduPing->setIncluded();
+        } else {
+            $this->baiduPing->update(['included' => false]);
         }
     }
 }

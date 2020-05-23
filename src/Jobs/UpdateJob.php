@@ -39,6 +39,16 @@ class UpdateJob implements ShouldQueue
     protected $baiduPing;
 
     /**
+     * @var string
+     */
+    protected $site;
+
+    /**
+     * @var string
+     */
+    protected $token;
+
+    /**
      * Create a new job instance.
      *
      * @param BaiduPing $baiduPing
@@ -46,6 +56,8 @@ class UpdateJob implements ShouldQueue
     public function __construct(BaiduPing $baiduPing)
     {
         $this->baiduPing = $baiduPing;
+        $this->site = config('services.baidu.site');
+        $this->token = config('services.baidu.site_token');
     }
 
     /**
@@ -57,7 +69,7 @@ class UpdateJob implements ShouldQueue
     {
         try {
             /** @var HttpResponse $response */
-            $response = Baidu::Update(config('services.baidu.site'), config('services.baidu.site_token'), $this->baiduPing->url);
+            $response = Baidu::Update($this->site, $this->token, $this->baiduPing->url);
             if (isset($response['error'])) {
                 $this->baiduPing->setFailure($response['message']);
             } else {

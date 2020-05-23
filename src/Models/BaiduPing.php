@@ -17,6 +17,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $status
  * @property string $msg
  * @property int $failures
+ * @property bool $included 是否已经收录
  * @property \Illuminate\Support\Carbon|null $push_at
  *
  * @property-read boolean $failure
@@ -109,5 +110,14 @@ class BaiduPing extends Model
     public function setSuccess()
     {
         return $this->update(['status' => static::STATUS_SUCCESS, 'msg' => 'ok', 'failures' => 0, 'push_at' => $this->freshTimestamp()]);
+    }
+
+    /**
+     * 设置推送成功
+     * @return bool
+     */
+    public function setIncluded()
+    {
+        return $this->update(['included' => true]);
     }
 }

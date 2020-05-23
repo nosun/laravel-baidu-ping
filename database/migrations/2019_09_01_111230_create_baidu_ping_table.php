@@ -21,8 +21,8 @@ class CreateBaiduPingTable extends Migration
             $table->string('msg')->nullable();
             $table->unsignedInteger('failures')->nullable()->default(0)->comment('失败计数');
             $table->boolean('included')->nullable()->default(false)->comment('是否已收录');
-            $table->timestamp('push_at', 0)->nullable();//推送时间
-            $table->timestamp('created_at', 0)->nullable();//创建时间
+            $table->timestamp('push_at', 0)->nullable()->comment('推送时间');
+            $table->timestamp('created_at', 0)->nullable()->comment('创建时间');
         });
     }
 
