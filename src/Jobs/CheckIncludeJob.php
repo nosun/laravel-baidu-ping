@@ -58,8 +58,6 @@ class CheckIncludeJob implements ShouldQueue
         $included = Baidu::checkInclude($this->baiduPing->url);
         if ($included) {
             $this->baiduPing->setIncluded();
-        } else {
-            $this->baiduPing->update(['included' => false]);
         }
     }
 }
