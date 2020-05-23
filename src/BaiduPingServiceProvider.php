@@ -27,9 +27,7 @@ class BaiduPingServiceProvider extends ServiceProvider
             $this->commands('command.baidu.ping');
             $this->commands('command.baidu.ping.retry');
             $this->commands('command.baidu.ping.renew');
-            $this->publishes([
-                __DIR__.'/../database/migrations' => database_path('migrations'),
-            ], 'baidu-ping');
+            $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
         }
 
         \Larva\Baidu\Ping\Models\BaiduPing::observe(\Larva\Baidu\Ping\Observers\BaiduPingObserver::class);

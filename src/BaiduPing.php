@@ -20,12 +20,21 @@ class BaiduPing
     /**
      * 推送 Url 给百度
      * @param string $url
-     * @param null $type
-     * @return
+     * @return \Larva\Baidu\Ping\Models\BaiduPing
      */
-    public static function push($url, $type = BaiduPingModel::TYPE_SITE)
+    public static function push($url)
     {
-        return BaiduPingModel::firstOrCreate(['url' => $url, 'type' => $type]);
+        return BaiduPingModel::firstOrCreate(['url' => $url, 'type' => BaiduPingModel::TYPE_SITE]);
+    }
+
+    /**
+     * 推送 Url 给百度
+     * @param string $url
+     * @return \Larva\Baidu\Ping\Models\BaiduPing
+     */
+    public static function daily($url)
+    {
+        return BaiduPingModel::firstOrCreate(['url' => $url, 'type' => BaiduPingModel::TYPE_DAILY]);
     }
 
     /**
@@ -52,41 +61,5 @@ class BaiduPing
         if (($ping = BaiduPingModel::query()->where('url', '=', $url)->first()) != null) {
             $ping->delete();
         }
-    }
-
-    /**
-     * 天级收录
-     * @param string $url
-     * @return
-     */
-    public static function pushRealtime($url)
-    {
-        if (config('services.baidu.app_id')) {
-            return static::push($url, BaiduPingModel::TYPE_REALTIME);
-        }
-        return static::push($url);
-    }
-
-    /**
-     * 周级收录
-     * @param string $url
-     * @return
-     */
-    public static function pushBatch($url)
-    {
-        if (config('services.baidu.app_id')) {
-            return static::push($url, BaiduPingModel::TYPE_BATCH);
-        }
-        return static::push($url);
-    }
-
-    /**
-     * 推MIP
-     * @param string $url
-     * @return mixed
-     */
-    public static function pushMip($url)
-    {
-        return static::push($url, BaiduPingModel::TYPE_MIP);
     }
 }

@@ -8,8 +8,6 @@
 namespace Larva\Baidu\Ping\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Larva\Baidu\Ping\Jobs\BaiduPingJob;
-use Larva\Baidu\Ping\Jobs\DeleteJob;
 
 /**
  * 百度Ping
@@ -31,10 +29,8 @@ class BaiduPing extends Model
 {
     const UPDATED_AT = null;
 
-    const TYPE_SITE = 'site';//站长平台
-    const TYPE_MIP = 'mip';//站长平台 MIP
-    const TYPE_REALTIME = 'realtime';//移动 天级收录
-    const TYPE_BATCH = 'batch';//移动 周级收录
+    const TYPE_SITE = 'site';//普通推送
+    const TYPE_DAILY = 'daily';//快速收录
 
     const STATUS_PENDING = 0b0;//待推送
     const STATUS_SUCCESS = 0b1;//正常

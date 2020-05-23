@@ -63,25 +63,9 @@ class BaiduPingJob implements ShouldQueue
                 } else {
                     $this->baiduPing->setSuccess();
                 }
-            } else if ($this->baiduPing->type == BaiduPing::TYPE_MIP) {
+            } else if ($this->baiduPing->type == BaiduPing::TYPE_DAILY) {
                 /** @var HttpResponse $response */
-                $response = Baidu::MIPPush(config('services.baidu.site'), config('services.baidu.site_token'), $this->baiduPing->url);
-                if (isset($response['error'])) {
-                    $this->baiduPing->setFailure($response['message']);
-                } else {
-                    $this->baiduPing->setSuccess();
-                }
-            } else if ($this->baiduPing->type == BaiduPing::TYPE_BATCH) {
-                /** @var HttpResponse $response */
-                $response = Baidu::WeekInclusion(config('services.baidu.app_id'), config('services.baidu.token'), $this->baiduPing->url);
-                if (isset($response['error'])) {
-                    $this->baiduPing->setFailure($response['message']);
-                } else {
-                    $this->baiduPing->setSuccess();
-                }
-            } else if ($this->baiduPing->type == BaiduPing::TYPE_REALTIME) {
-                /** @var HttpResponse $response */
-                $response = Baidu::DayInclusion(config('services.baidu.app_id'), config('services.baidu.token'), $this->baiduPing->url);
+                $response = Baidu::DailyPush(config('services.baidu.site'), config('services.baidu.token'), $this->baiduPing->url);
                 if (isset($response['error'])) {
                     $this->baiduPing->setFailure($response['message']);
                 } else {
